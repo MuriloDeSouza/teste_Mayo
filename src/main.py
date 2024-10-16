@@ -1,8 +1,12 @@
-
-from fastapi import FastAPI, status
+from fastapi import FastAPI, status, Request, Depends, Form
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 from supabase import create_client, Client
 import random
+
+templates = Jinja2Templates(directory="static")
 
 def conectar_supabase() -> Client:
     url = "https://ofqnhcrmsxvrlivqxoqh.supabase.co"  # Substitua por sua URL doSupabase
@@ -10,6 +14,12 @@ def conectar_supabase() -> Client:
     return create_client(url, key)
 
 app = FastAPI()
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+@app.get("/", response_class=HTMLResponse)
+async def read_index():
+    return templates.TemplateResponse("index.html", {"request": {}})
 
 @app.get("/to_do/")
 def get_to_do():
@@ -38,5 +48,11 @@ def create_to_do(to_do: TodoSchema):
         "descricao": to_do.descricao
     }).execute()
     
+    return resultado
+
+@app.delete("/to_do/{id}")
+def delete_to_do(id: int):
+    supabase = conectar_supabase()
+    resultado = supabase.table('to_do').delete().eq('id', id).execute()
     return resultado
 
