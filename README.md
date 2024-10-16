@@ -6,6 +6,7 @@ Criação de um "To-Do List" como teste técnico para a empresa Mayo
 # Link do vídeo gravado da aplicação:
 
 Title: To_Do (CRUD) com FastAPI e Supabase
+
 URL: [YouTube.com/](https://youtu.be/GHYnxoMC2cE)
 
 ## Objetivo do Projeto
