@@ -11,8 +11,13 @@
     <form id="toDoForm">
         <input type="text" id="titulo" placeholder="Título" required>
         <input type="text" id="descricao" placeholder="Descrição" required>
+        <select id="status" required>
+            <option value="pendente">Pendente</option>
+            <option value="concluido">Concluído</option>
+        </select>
         <button type="submit">Adicionar</button>
     </form>
+    <button id="verTabela">Ver Tabela</button>
     <ul id="toDoList"></ul>
     <script src="/static/app.js"></script>
 </body>

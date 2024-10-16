@@ -36,6 +36,7 @@ def get_to_do(id: int):
 class TodoSchema(BaseModel):
     titulo: str
     descricao: str
+    status: str
 
 @app.post("/to_do/", status_code=status.HTTP_201_CREATED)
 def create_to_do(to_do: TodoSchema):
@@ -45,7 +46,8 @@ def create_to_do(to_do: TodoSchema):
     resultado = supabase.table('to_do').insert({
         "id": id,
         "titulo": to_do.titulo,
-        "descricao": to_do.descricao
+        "descricao": to_do.descricao,
+        "status": to_do.status
     }).execute()
     
     return resultado
@@ -56,3 +58,10 @@ def delete_to_do(id: int):
     resultado = supabase.table('to_do').delete().eq('id', id).execute()
     return resultado
 
+@app.put("/to_do/{id}")
+def update_to_do(id: int, status: str):
+    supabase = conectar_supabase()
+    resultado = supabase.table('to_do').update({
+        "status": status
+    }).eq('id', id).execute()
+    return resultado
