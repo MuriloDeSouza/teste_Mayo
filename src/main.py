@@ -6,8 +6,6 @@ from pydantic import BaseModel
 from supabase import create_client, Client
 import random
 
-templates = Jinja2Templates(directory="static")
-
 def conectar_supabase() -> Client:
     url = "https://ofqnhcrmsxvrlivqxoqh.supabase.co"  # Substitua por sua URL doSupabase
     key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9mcW5oY3Jtc3h2cmxpdnF4b3FoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjg1MjkyNDgsImV4cCI6MjA0NDEwNTI0OH0.XxXElUoIkUXeux7OqJdUh5IQ9gdLAXHL0boTQ2_yII4"  # Substitua pela sua chave de API do Supabase
@@ -16,10 +14,11 @@ def conectar_supabase() -> Client:
 app = FastAPI()
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
+templates = Jinja2Templates(directory="templates")
 
 @app.get("/", response_class=HTMLResponse)
-async def read_index():
-    return templates.TemplateResponse("index.html", {"request": {}})
+async def read_index(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
 
 @app.get("/to_do/")
 def get_to_do():
@@ -58,10 +57,11 @@ def delete_to_do(id: int):
     resultado = supabase.table('to_do').delete().eq('id', id).execute()
     return resultado
 
+class UpdateStatus(BaseModel):
+    status: str
+
 @app.put("/to_do/{id}")
-def update_to_do(id: int, status: str):
+def update_to_do(id: int, status: UpdateStatus):
     supabase = conectar_supabase()
-    resultado = supabase.table('to_do').update({
-        "status": status
-    }).eq('id', id).execute()
+    resultado = supabase.table('to_do').update({"status": status.status}).eq('id', id).execute()
     return resultado
