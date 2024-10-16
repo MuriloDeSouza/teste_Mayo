@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  backend:
+    container_name: meu-backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"  # Mapeando corretamente a porta 8000
+    volumes:
+      - ./backend:/app
+      - ./frontend/static:/app/static  # Montagem do volume para arquivos estáticos
+    depends_on:
+      - frontend
+
+  frontend:
+    container_name: meu-frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"  # Mapeando a porta do Nginx corretamente
+    volumes:
+      - ./frontend:/usr/share/nginx/html

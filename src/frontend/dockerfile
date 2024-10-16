@@ -1,0 +1,8 @@
+# Usando uma imagem oficial do Nginx como base
+FROM nginx:alpine
+
+# Copiando os arquivos do frontend para o diretório padrão do Nginx
+COPY . /usr/share/nginx/html
+
+# Expondo a porta padrão do Nginx
+EXPOSE 80

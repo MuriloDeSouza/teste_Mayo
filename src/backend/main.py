@@ -13,8 +13,13 @@ def conectar_supabase() -> Client:
 
 app = FastAPI()
 
+
+# Monta os arquivos estáticos
 app.mount("/static", StaticFiles(directory="static"), name="static")
+
+# Configura os templates
 templates = Jinja2Templates(directory="templates")
+
 
 @app.get("/", response_class=HTMLResponse)
 async def read_index(request: Request):
