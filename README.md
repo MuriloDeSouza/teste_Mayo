@@ -3,6 +3,11 @@ Criação de um "To-Do List" como teste técnico para a empresa Mayo
 
 # Projeto de Backend e Frontend com Docker (To_Do list)
 
+# Link do vídeo gravado da aplicação:
+
+Title: To_Do (CRUD) com FastAPI e Supabase
+URL: [YouTube.com/](https://youtu.be/GHYnxoMC2cE)
+
 ## Objetivo do Projeto
 
 &emsp; O objetivo deste projeto é criar um sistema completo de backend e frontend dockerizado, com a utilização do FastAPI no backend e Nginx no frontend. O projeto foi desenvolvido para demonstrar como conectar as duas partes da aplicação de forma eficiente, utilizando Docker para gerenciar containers e facilitar o deploy. A aplicação serve uma interface frontend estática e uma API no backend, que pode ser acessada por diferentes serviços.
